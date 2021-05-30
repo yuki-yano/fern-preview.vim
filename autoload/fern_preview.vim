@@ -1,4 +1,3 @@
-let s:Buffer = vital#fern_preview#import('VS.Vim.Buffer')
 let s:Window = vital#fern_preview#import('VS.Vim.Window')
 let s:FloatingWindow = vital#fern_preview#import('VS.Vim.Window.FloatingWindow')
 
@@ -69,7 +68,7 @@ function! fern_preview#half_up() abort
 endfunction
 
 function! s:open_preview(path) abort
-  call s:win.set_bufnr(s:Buffer.load(a:path))
+  call s:win.set_bufnr(bufnr(a:path, v:true))
   call setbufvar(s:win.get_bufnr(), '&bufhidden', 'wipe')
   call setbufvar(s:win.get_bufnr(), '&buflisted', 0)
   call setbufvar(s:win.get_bufnr(), '&buftype', 'nofile')
