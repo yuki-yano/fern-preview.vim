@@ -75,8 +75,8 @@ function! s:open_preview(path) abort
   call setbufvar(s:win.get_bufnr(), '&buflisted', 0)
   call setbufvar(s:win.get_bufnr(), '&buftype', 'nofile')
 
-  let width = min([&columns - 4, max([80, &columns - 80])])
-  let height = min([&lines - 4, max([20, &lines - 20])])
+  let width = min([g:fern_preview_max_width, max([80, &columns - 80])])
+  let height = min([g:fern_preview_max_height, max([20, &lines - 20])])
   let top = ((&lines - height) / 2) - 1
   let left = (&columns - width) / 2
 

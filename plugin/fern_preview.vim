@@ -7,6 +7,14 @@ if !exists('g:fern_auto_preview')
   let g:fern_auto_preview = v:false
 endif
 
+if !exists('g:fern_preview_max_width')
+  let g:fern_preview_max_width = &columns - 4
+endif
+
+if !exists('g:fern_preview_max_height')
+  let g:fern_preview_max_height = &lines - 4
+endif
+
 if !exists('g:fern_preview_default_mapping')
   let g:fern_preview_default_mapping = v:true
 endif
