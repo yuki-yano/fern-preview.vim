@@ -17,7 +17,7 @@ nnoremap <Plug>(fern-action-preview:toggle-auto-preview) :<C-u>call fern_preview
 nnoremap <Plug>(fern-action-preview:half-down) :<C-u>call fern_preview#half_down()<CR>
 nnoremap <Plug>(fern-action-preview:half-up)   :<C-u>call fern_preview#half_up()<CR>
 
-function! s:fern_settings() abort
+function! s:fern_preview_settings() abort
   if g:fern_preview_default_mapping
     nmap <silent> <buffer> <nowait> p <Plug>(fern-action-preview:toggle)
     nmap <silent> <buffer> <nowait> P <Plug>(fern-action-preview:toggle-auto-preview)
@@ -30,4 +30,4 @@ function! s:fern_settings() abort
   autocmd CursorMoved <buffer> ++nested call fern_preview#cursor_moved()
 endfunction
 
-autocmd FileType fern call s:fern_settings()
+autocmd FileType fern call s:fern_preview_settings()
