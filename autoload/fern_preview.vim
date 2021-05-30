@@ -69,6 +69,18 @@ function! fern_preview#half_up() abort
   call s:Window.scroll(winid, info.topline - info.height / 2)
 endfunction
 
+function! fern_preview#quit_or_close_preview() abort
+  if s:win.is_visible()
+    call fern_preview#close()
+  else
+    quit
+  endif
+endfunction
+
+function! fern_preview#is_visible() abort
+  return s:win.is_visible()
+endfunction
+
 function! s:open_preview(path) abort
   call s:win.set_bufnr(bufnr(a:path, v:true))
   call setbufvar(s:win.get_bufnr(), '&bufhidden', 'wipe')
