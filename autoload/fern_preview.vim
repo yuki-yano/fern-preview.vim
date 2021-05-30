@@ -1,8 +1,13 @@
-let s:Buffer = vital#fern_preview#import('VS.Vim.Buffer')
 let s:Window = vital#fern_preview#import('VS.Vim.Window')
 let s:FloatingWindow = vital#fern_preview#import('VS.Vim.Window.FloatingWindow')
 
 let s:win = s:FloatingWindow.new()
+
+if has('nvim')
+  call s:win.set_var('&winhighlight', 'NormalFloat:Normal')
+else
+  call s:win.set_var('&wincolor', 'Normal')
+endif
 
 function! fern_preview#toggle_auto_preview() abort
   if g:fern_auto_preview
@@ -24,7 +29,6 @@ endfunction
 
 function! fern_preview#cursor_moved() abort
   if g:fern_auto_preview
-    call fern_preview#close()
     call fern_preview#open()
   else
     call fern_preview#close()
@@ -53,36 +57,33 @@ endfunction
 
 function! fern_preview#half_down() abort
   let winid = s:win.get_winid()
-  call s:Window.scroll(winid, s:Window.info(winid).topline + s:height / 2)
+  let info = s:Window.info(winid)
+  call s:Window.scroll(winid, info.topline + info.height / 2)
 endfunction
 
 function! fern_preview#half_up() abort
   let winid = s:win.get_winid()
-  call s:Window.scroll(winid, s:Window.info(winid).topline - s:height / 2)
+  let info = s:Window.info(winid)
+  call s:Window.scroll(winid, info.topline - info.height / 2)
 endfunction
 
 function! s:open_preview(path) abort
-  call fern_preview#close()
-
-  let bufnr = s:Buffer.load(a:path)
-  call s:win.set_bufnr(bufnr)
+  call s:win.set_bufnr(bufnr(a:path, v:true))
+  call setbufvar(s:win.get_bufnr(), '&bufhidden', 'wipe')
+  call setbufvar(s:win.get_bufnr(), '&buflisted', 0)
+  call setbufvar(s:win.get_bufnr(), '&buftype', 'nofile')
 
   let width = min([&columns - 4, max([80, &columns - 80])])
-  let s:height = min([&lines - 4, max([20, &lines - 20])])
-  let top = ((&lines - s:height) / 2) - 1
+  let height = min([&lines - 4, max([20, &lines - 20])])
+  let top = ((&lines - height) / 2) - 1
   let left = (&columns - width) / 2
 
   call s:win.open({
   \   'row': top,
   \   'col': left,
   \   'width': width,
-  \   'height': s:height,
+  \   'height': height,
   \   'topline': 1,
   \ })
-
-  if has('nvim')
-    call nvim_win_set_option(s:win.get_winid(), 'winhl', 'Normal:Normal')
-  endif
-
-  " TODO: set preview window
 endfunction
+
