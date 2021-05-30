@@ -3,6 +3,8 @@ let s:FloatingWindow = vital#fern_preview#import('VS.Vim.Window.FloatingWindow')
 
 let s:win = s:FloatingWindow.new()
 
+call s:win.set_var('&number', 1)
+
 if has('nvim')
   call s:win.set_var('&winhighlight', 'NormalFloat:Normal')
 else
@@ -86,4 +88,3 @@ function! s:open_preview(path) abort
   \   'topline': 1,
   \ })
 endfunction
-
