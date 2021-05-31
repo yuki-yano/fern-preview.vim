@@ -87,23 +87,24 @@ function! fern_preview#is_visible() abort
   return s:win.is_visible()
 endfunction
 
+function! fern_preview#width_default_func() abort
+  let width = float2nr(&columns * 0.8)
+  return width
+endfunction
+
+function! fern_preview#height_default_func() abort
+  let height = float2nr(&lines * 0.8)
+  return height
+endfunction
+
 function! s:open_preview(path) abort
   call s:win.set_bufnr(bufnr(a:path, v:true))
   call setbufvar(s:win.get_bufnr(), '&bufhidden', 'wipe')
   call setbufvar(s:win.get_bufnr(), '&buflisted', 0)
   call setbufvar(s:win.get_bufnr(), '&buftype', 'nofile')
 
-  let width = float2nr(&columns * g:fern_preview_width_ratio)
-  let height = float2nr(&lines * g:fern_preview_height_ratio)
-
-  if g:fern_preview_max_width
-    let width = min([width, g:fern_preview_max_width])
-  endif
-
-  if g:fern_preview_max_height
-    let height = min([width, g:fern_preview_max_height])
-  endif
-
+  let width  = call(g:fern_preview_window_calculator.width, [])
+  let height = call(g:fern_preview_window_calculator.height, [])
   let top = ((&lines - height) / 2) - 1
   let left = (&columns - width) / 2
 
