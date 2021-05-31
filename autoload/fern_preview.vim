@@ -11,6 +11,14 @@ else
   call s:win.set_var('&wincolor', 'Normal')
 endif
 
+function! fern_preview#smart_preview(preview, non_preview) abort
+  if s:win.is_visible()
+    return a:preview
+  else
+    return a:non_preview
+  endif
+endfunction
+
 function! fern_preview#toggle_auto_preview() abort
   if g:fern_auto_preview
     let g:fern_auto_preview = v:false
@@ -67,14 +75,6 @@ function! fern_preview#half_up() abort
   let winid = s:win.get_winid()
   let info = s:Window.info(winid)
   call s:Window.scroll(winid, info.topline - info.height / 2)
-endfunction
-
-function! fern_preview#quit_or_close_preview() abort
-  if s:win.is_visible()
-    call fern_preview#close()
-  else
-    quit
-  endif
 endfunction
 
 function! fern_preview#is_visible() abort
