@@ -15,11 +15,4 @@ if !exists('g:fern_preview_max_height')
   let g:fern_preview_max_height = &lines - 4
 endif
 
-function! s:fern_preview_settings() abort
-  autocmd BufLeave    <buffer>          call fern_preview#close()
-  autocmd CursorMoved <buffer> ++nested call fern_preview#cursor_moved()
-endfunction
-
-autocmd FileType fern call s:fern_preview_settings()
-
 call add(g:fern#scheme#file#mapping#mappings, 'preview')

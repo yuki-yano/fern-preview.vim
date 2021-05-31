@@ -58,6 +58,12 @@ function! fern_preview#open() abort
     return
   endif
 
+  augroup fern-preview-open
+    autocmd! * <buffer>
+    autocmd WinLeave    <buffer> ++once          call fern_preview#close()
+    autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+  augroup END
+
   call s:open_preview(path)
 endfunction
 
