@@ -15,18 +15,11 @@ if !exists('g:fern_preview_max_height')
   let g:fern_preview_max_height = &lines - 4
 endif
 
-nnoremap <Plug>(fern-action-preview:open)                  :<C-u>call fern_preview#open()<CR>
-nnoremap <Plug>(fern-action-preview:close)                 :<C-u>call fern_preview#close()<CR>
-nnoremap <Plug>(fern-action-preview:toggle)                :<C-u>call fern_preview#toggle()<CR>
-nnoremap <Plug>(fern-action-preview:toggle-auto-preview)   :<C-u>call fern_preview#toggle_auto_preview()<CR>
-nnoremap <Plug>(fern-action-preview:quit_or_close_preview) :<C-u>call fern_preview#quit_or_close_preview()<CR>
-
-nnoremap <Plug>(fern-action-preview:half-down) :<C-u>call fern_preview#half_down()<CR>
-nnoremap <Plug>(fern-action-preview:half-up)   :<C-u>call fern_preview#half_up()<CR>
-
 function! s:fern_preview_settings() abort
   autocmd BufLeave    <buffer>          call fern_preview#close()
   autocmd CursorMoved <buffer> ++nested call fern_preview#cursor_moved()
 endfunction
 
 autocmd FileType fern call s:fern_preview_settings()
+
+call add(g:fern#scheme#file#mapping#mappings, 'preview')
