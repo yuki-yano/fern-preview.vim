@@ -39,9 +39,9 @@ call dein#add('yuki-yano/fern-preview.vim')
 
 ```vim
 nmap <silent> <buffer> p     <Plug>(fern-action-preview:toggle)
-nmap <silent> <buffer> P     <Plug>(fern-action-preview:toggle-auto-preview)
-nmap <silent> <buffer> <C-d> <Plug>(fern-action-preview:half-down)
-nmap <silent> <buffer> <C-u> <Plug>(fern-action-preview:half-up)
+nmap <silent> <buffer> P     <Plug>(fern-action-preview:auto:toggle)
+nmap <silent> <buffer> <C-d> <Plug>(fern-action-preview:scroll:down:half)
+nmap <silent> <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
 ```
 
 ### Use smart_preview function example
