@@ -15,10 +15,6 @@ if !exists('g:fern_preview_max_height')
   let g:fern_preview_max_height = &lines - 4
 endif
 
-if !exists('g:fern_preview_default_mapping')
-  let g:fern_preview_default_mapping = v:true
-endif
-
 nnoremap <Plug>(fern-action-preview:open)                  :<C-u>call fern_preview#open()<CR>
 nnoremap <Plug>(fern-action-preview:close)                 :<C-u>call fern_preview#close()<CR>
 nnoremap <Plug>(fern-action-preview:toggle)                :<C-u>call fern_preview#toggle()<CR>
@@ -29,15 +25,6 @@ nnoremap <Plug>(fern-action-preview:half-down) :<C-u>call fern_preview#half_down
 nnoremap <Plug>(fern-action-preview:half-up)   :<C-u>call fern_preview#half_up()<CR>
 
 function! s:fern_preview_settings() abort
-  if g:fern_preview_default_mapping
-    nmap <silent> <buffer> <nowait> p <Plug>(fern-action-preview:toggle)
-    nmap <silent> <buffer> <nowait> P <Plug>(fern-action-preview:toggle-auto-preview)
-    nmap <silent> <buffer> <nowait> q <Plug>(fern-action-preview:quit_or_close_preview)
-
-    nmap <silent> <buffer> <C-d> <Plug>(fern-action-preview:half-down)
-    nmap <silent> <buffer> <C-u> <Plug>(fern-action-preview:half-up)
-  endif
-
   autocmd BufLeave    <buffer>          call fern_preview#close()
   autocmd CursorMoved <buffer> ++nested call fern_preview#cursor_moved()
 endfunction
