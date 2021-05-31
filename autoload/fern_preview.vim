@@ -66,18 +66,18 @@ function! fern_preview#open() abort
 
   let path = helper.sync.get_cursor_node()['_path']
 
+  augroup fern-preview-open
+    autocmd! * <buffer>
+    autocmd WinLeave    <buffer> ++once          call fern_preview#close()
+    autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+  augroup END
+
   if isdirectory(path)
     call fern_preview#close()
     return
   endif
 
   call s:open_preview(path)
-
-  augroup fern-preview-open
-    autocmd! * <buffer>
-    autocmd WinLeave    <buffer> ++once          call fern_preview#close()
-    autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
-  augroup END
 endfunction
 
 function! fern_preview#close() abort
