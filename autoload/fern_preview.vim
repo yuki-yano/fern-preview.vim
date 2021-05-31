@@ -102,6 +102,8 @@ function! s:open_preview(path) abort
   call setbufvar(s:win.get_bufnr(), '&bufhidden', 'wipe')
   call setbufvar(s:win.get_bufnr(), '&buflisted', 0)
   call setbufvar(s:win.get_bufnr(), '&buftype', 'nofile')
+  call setbufvar(s:win.get_bufnr(), '&swapfile', 0)
+  call setbufvar(s:win.get_bufnr(), '&undofile', 0)
 
   let width  = call(g:fern_preview_window_calculator.width, [])
   let height = call(g:fern_preview_window_calculator.height, [])
