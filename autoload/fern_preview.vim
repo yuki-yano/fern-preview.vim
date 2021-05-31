@@ -98,5 +98,6 @@ function! s:open_preview(path) abort
   \   'width': width,
   \   'height': height,
   \   'topline': 1,
+  \   'border': v:true,
   \ })
 endfunction
