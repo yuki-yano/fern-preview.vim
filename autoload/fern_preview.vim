@@ -51,6 +51,10 @@ function! fern_preview#toggle() abort
 endfunction
 
 function! fern_preview#cursor_moved() abort
+  if !has('nvim') && s:line ==# line('.')
+    return
+  endif
+
   if g:fern_auto_preview
     call fern_preview#open()
   else
@@ -69,8 +73,16 @@ function! fern_preview#open() abort
   augroup fern-preview-open
     autocmd! * <buffer>
     autocmd WinLeave    <buffer> ++once          call fern_preview#close()
-    autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+    if has('nvim')
+      autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+    else
+      autocmd CursorMoved <buffer> ++nested        call fern_preview#cursor_moved()
+    endif
   augroup END
+
+  if !has('nvim')
+    let s:line = line('.')
+  endif
 
   if isdirectory(path)
     call fern_preview#close()
