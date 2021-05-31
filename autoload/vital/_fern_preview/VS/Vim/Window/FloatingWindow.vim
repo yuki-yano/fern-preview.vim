@@ -327,7 +327,11 @@ endif
 "
 if has('nvim')
   function! s:_exists(winid) abort
-    return type(a:winid) == type(0) && nvim_win_is_valid(a:winid) && nvim_win_get_number(a:winid) != -1
+    try
+      return type(a:winid) == type(0) && nvim_win_is_valid(a:winid) && nvim_win_get_number(a:winid) != -1
+    catch /.*/
+      return v:false
+    endtry
   endfunction
 else
   function! s:_exists(winid) abort
