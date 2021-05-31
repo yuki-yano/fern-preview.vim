@@ -19,4 +19,9 @@ if !exists('g:fern_preview_window_calculator.height')
   let g:fern_preview_window_calculator.height = function('fern_preview#height_default_func')
 endif
 
+augroup fern-preview-internal
+  autocmd!
+  autocmd BufReadCmd fern_preview://* call fern_preview#buf_read()
+augroup END
+
 call add(g:fern#scheme#file#mapping#mappings, 'preview')

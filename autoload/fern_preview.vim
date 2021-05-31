@@ -19,6 +19,19 @@ function! fern_preview#smart_preview(preview, non_preview) abort
   endif
 endfunction
 
+function! fern_preview#buf_read() abort
+  let bufnr = expand('<abuf>') + 0
+
+  call setbufvar(bufnr, '&bufhidden', 'wipe')
+  call setbufvar(bufnr, '&buflisted', 0)
+  call setbufvar(bufnr, '&buftype', 'nofile')
+  call setbufvar(bufnr, '&swapfile', 0)
+  call setbufvar(bufnr, '&undofile', 0)
+
+  call setline(1, readfile(substitute(expand('<afile>'), '^fern_preview://', '', 'g')))
+  filetype detect
+endfunction
+
 function! fern_preview#toggle_auto_preview() abort
   if g:fern_auto_preview
     let g:fern_auto_preview = v:false
@@ -53,18 +66,18 @@ function! fern_preview#open() abort
 
   let path = helper.sync.get_cursor_node()['_path']
 
-  augroup fern-preview-open
-    autocmd! * <buffer>
-    autocmd WinLeave    <buffer> ++once          call fern_preview#close()
-    autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
-  augroup END
-
   if isdirectory(path)
     call fern_preview#close()
     return
   endif
 
   call s:open_preview(path)
+
+  augroup fern-preview-open
+    autocmd! * <buffer>
+    autocmd WinLeave    <buffer> ++once          call fern_preview#close()
+    autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+  augroup END
 endfunction
 
 function! fern_preview#close() abort
@@ -98,17 +111,12 @@ function! fern_preview#height_default_func() abort
 endfunction
 
 function! s:open_preview(path) abort
-  call s:win.set_bufnr(bufnr(a:path, v:true))
-  call setbufvar(s:win.get_bufnr(), '&bufhidden', 'wipe')
-  call setbufvar(s:win.get_bufnr(), '&buflisted', 0)
-  call setbufvar(s:win.get_bufnr(), '&buftype', 'nofile')
-  call setbufvar(s:win.get_bufnr(), '&swapfile', 0)
-  call setbufvar(s:win.get_bufnr(), '&undofile', 0)
+  call s:win.set_bufnr(bufnr('fern_preview://' . a:path, v:true))
 
   let width  = call(g:fern_preview_window_calculator.width, [])
   let height = call(g:fern_preview_window_calculator.height, [])
-  let top = ((&lines - height) / 2) - 1
-  let left = (&columns - width) / 2
+  let top    = ((&lines - height) / 2) - 1
+  let left   = (&columns - width) / 2
 
   call s:win.open({
   \   'row': top,
