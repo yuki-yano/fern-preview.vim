@@ -47,6 +47,6 @@ nmap <silent> <buffer> <C-u> <Plug>(fern-action-preview:half-up)
 ### Use smart_preview function example
 
 ```vim
-nmap <silent> <buffer> <expr> <Plug>(fern-quit-or-close-preview) fern#preview#smart_preview("\<Plug>(fern-action-preview:close)", ":q\<CR>")
+nmap <silent> <buffer> <expr> <Plug>(fern-quit-or-close-preview) fern_preview#smart_preview("\<Plug>(fern-action-preview:close)", ":q\<CR>")
 nmap <silent> <buffer> q <Plug>(fern-quit-or-close-preview)
 ```
