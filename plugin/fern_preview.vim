@@ -21,7 +21,7 @@ endif
 
 augroup fern-preview-internal
   autocmd!
-  autocmd BufReadCmd fern_preview://* call fern_preview#buf_read()
+  autocmd BufReadCmd fernpreview://* call fern_preview#buf_read()
 augroup END
 
 call add(g:fern#scheme#file#mapping#mappings, 'preview')

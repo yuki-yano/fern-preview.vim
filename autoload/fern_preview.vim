@@ -28,7 +28,7 @@ function! fern_preview#buf_read() abort
   call setbufvar(bufnr, '&swapfile', 0)
   call setbufvar(bufnr, '&undofile', 0)
 
-  call setline(1, readfile(substitute(expand('<afile>'), '^fern_preview://', '', 'g')))
+  call setline(1, readfile(substitute(expand('<afile>'), '^fernpreview://', '', 'g')))
   filetype detect
 endfunction
 
@@ -123,7 +123,7 @@ function! fern_preview#height_default_func() abort
 endfunction
 
 function! s:open_preview(path) abort
-  call s:win.set_bufnr(bufnr('fern_preview://' . a:path, v:true))
+  call s:win.set_bufnr(bufnr('fernpreview://' . a:path, v:true))
 
   let width  = call(g:fern_preview_window_calculator.width, [])
   let height = call(g:fern_preview_window_calculator.height, [])
