@@ -10,7 +10,7 @@ Add a file preview function to [fern.vim](https://github.com/lambdalisue/fern.vi
 
 ## Demo
 
-![fern-preview](https://user-images.githubusercontent.com/5423775/120148266-ec0ec680-c222-11eb-9a3f-42ff148708ec.gif "zeno")
+![fern-preview](https://user-images.githubusercontent.com/5423775/120148266-ec0ec680-c222-11eb-9a3f-42ff148708ec.gif "fern-preview")
 
 
 ## Requirements
