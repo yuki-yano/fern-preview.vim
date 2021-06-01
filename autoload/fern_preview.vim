@@ -1,4 +1,5 @@
-let s:Window = vital#fern_preview#import('VS.Vim.Window')
+let s:Buffer         = vital#fern_preview#import('VS.Vim.Buffer')
+let s:Window         = vital#fern_preview#import('VS.Vim.Window')
 let s:FloatingWindow = vital#fern_preview#import('VS.Vim.Window.FloatingWindow')
 
 let s:win = s:FloatingWindow.new()
@@ -17,19 +18,6 @@ function! fern_preview#smart_preview(preview, non_preview) abort
   else
     return a:non_preview
   endif
-endfunction
-
-function! fern_preview#buf_read() abort
-  let bufnr = expand('<abuf>') + 0
-
-  call setbufvar(bufnr, '&bufhidden', 'wipe')
-  call setbufvar(bufnr, '&buflisted', 0)
-  call setbufvar(bufnr, '&buftype', 'nofile')
-  call setbufvar(bufnr, '&swapfile', 0)
-  call setbufvar(bufnr, '&undofile', 0)
-
-  call setline(1, readfile(substitute(expand('<afile>'), '^fernpreview://', '', 'g')))
-  filetype detect
 endfunction
 
 function! fern_preview#disable_auto_preview() abort
@@ -144,7 +132,14 @@ function! fern_preview#height_default_func() abort
 endfunction
 
 function! s:open_preview(path) abort
-  call s:win.set_bufnr(bufnr('fernpreview://' . a:path, v:true))
+  let bufnr = s:Buffer.pseudo(a:path)
+  call s:win.set_bufnr(bufnr)
+
+  call setbufvar(bufnr, '&bufhidden', 'wipe')
+  call setbufvar(bufnr, '&buflisted', 0)
+  call setbufvar(bufnr, '&buftype', 'nofile')
+  call setbufvar(bufnr, '&swapfile', 0)
+  call setbufvar(bufnr, '&undofile', 0)
 
   let width  = call(g:fern_preview_window_calculator.width, [])
   let height = call(g:fern_preview_window_calculator.height, [])
