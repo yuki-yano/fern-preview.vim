@@ -32,6 +32,14 @@ function! fern_preview#buf_read() abort
   filetype detect
 endfunction
 
+function! fern_preview#disable_auto_preview() abort
+  let g:fern_auto_preview = v:false
+endfunction
+
+function! fern_preview#enable_auto_preview() abort
+  let g:fern_auto_preview = v:true
+endfunction
+
 function! fern_preview#toggle_auto_preview() abort
   if g:fern_auto_preview
     let g:fern_auto_preview = v:false
