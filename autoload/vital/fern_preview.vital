@@ -3,3 +3,4 @@ fern_preview
 
 VS.Vim.Window
 VS.Vim.Window.FloatingWindow
+VS.Vim.Buffer
