@@ -21,6 +21,7 @@ endif
 
 augroup fern-preview-internal
   autocmd!
+  autocmd FileType   fern            call fern_preview#fern_open_or_change_dir()
   autocmd BufReadCmd fernpreview://* call fern_preview#buf_read()
 augroup END
 

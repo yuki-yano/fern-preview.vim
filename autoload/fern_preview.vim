@@ -70,6 +70,27 @@ function! fern_preview#cursor_moved() abort
   endif
 endfunction
 
+function! fern_preview#define_autocmd() abort
+  augroup fern-preview-opened
+    autocmd! * <buffer>
+    autocmd BufLeave <buffer> ++once call fern_preview#close()
+    if has('nvim')
+      autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+    else
+      autocmd CursorMoved <buffer> ++nested        call fern_preview#cursor_moved()
+    endif
+  augroup END
+endfunction
+
+function! fern_preview#fern_open_or_change_dir() abort
+  call fern_preview#close()
+
+  if g:fern_auto_preview
+    call fern_preview#open()
+    call fern_preview#define_autocmd()
+  endif
+endfunction
+
 function! fern_preview#open() abort
   let helper = fern#helper#new()
   if helper.sync.get_scheme() !=# 'file'
@@ -78,15 +99,7 @@ function! fern_preview#open() abort
 
   let path = helper.sync.get_cursor_node()['_path']
 
-  augroup fern-preview-open
-    autocmd! * <buffer>
-    autocmd WinLeave    <buffer> ++once          call fern_preview#close()
-    if has('nvim')
-      autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
-    else
-      autocmd CursorMoved <buffer> ++nested        call fern_preview#cursor_moved()
-    endif
-  augroup END
+  call fern_preview#define_autocmd()
 
   if !has('nvim')
     let s:line = line('.')
