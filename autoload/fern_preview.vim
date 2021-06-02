@@ -72,7 +72,7 @@ function! fern_preview#open() abort
     return
   endif
 
-  if s:is_blacklist_filetype(path)
+  if s:is_ignore_filetype(path)
     call fern_preview#close()
     echohl WarningMsg
     echomsg 'Ignore filetype: ' . path
@@ -188,8 +188,8 @@ function! s:define_autocmd() abort
   augroup END
 endfunction
 
-function! s:is_blacklist_filetype(path) abort
-  for ext in g:fern_preview_blacklist_extensions
+function! s:is_ignore_filetype(path) abort
+  for ext in g:fern_preview_ignore_extensions
     if match(a:path, '.' . ext . '$') !=# -1
       return v:true
     endif
@@ -203,5 +203,9 @@ function! s:is_valid_filesize(path) abort
 endfunction
 
 function! s:is_binary(path) abort
-  return get(readfile(a:path, 'b', 10), 0, '') =~# '[^[:print:]]'
+  try
+    return get(readfile(a:path, 'b', 10), 0, '') =~# '[^[:print:]]'
+  catch 
+    return v:true
+  endtry
 endfunction

@@ -31,8 +31,8 @@ if !exists('g:fern_preview_max_filesize')
   let g:fern_preview_max_filesize = 300 * 1000
 endif
 
-if !exists('g:fern_preview_blacklist_extensions')
-  let g:fern_preview_blacklist_extensions = ['gif', 'jpeg', 'jpg', 'png', 'tif', 'tiff', 'wbmp', 'ico', 'jng', 'woff', 'woff2', 'jar', 'war', 'ear', 'doc', 'pdf', 'ps', 'ai', 'rtf', 'xls', 'eot', 'ppt', 'pptx', 'xlsx', 'docx', 'wasm', '7z', 'rar', 'rpm', 'zip', 'bin', 'exe', 'dll', 'deb', 'dmg', 'iso', 'msi', 'mp3', 'ogg', 'mp4', 'mpeg', 'mpg', 'mov', 'webm', 'flv', 'wmv', 'avi', 'so', 'a', 'lib', 'tar', 'gz', 'bz2', 'xz', 'zst', 'min.js', 'js.map']
+if !exists('g:fern_preview_ignore_extensions')
+  let g:fern_preview_ignore_extensions = ['gif', 'jpeg', 'jpg', 'png', 'tif', 'tiff', 'wbmp', 'ico', 'jng', 'woff', 'woff2', 'jar', 'war', 'ear', 'doc', 'pdf', 'ps', 'ai', 'rtf', 'xls', 'eot', 'ppt', 'pptx', 'xlsx', 'docx', 'wasm', '7z', 'rar', 'rpm', 'zip', 'bin', 'exe', 'dll', 'deb', 'dmg', 'iso', 'msi', 'mp3', 'ogg', 'mp4', 'mpeg', 'mpg', 'mov', 'webm', 'flv', 'wmv', 'avi', 'so', 'a', 'lib', 'tar', 'gz', 'bz2', 'xz', 'zst', 'min.js', 'js.map']
 endif
 
 augroup fern-preview-internal
