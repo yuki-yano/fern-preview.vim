@@ -130,14 +130,14 @@ function! fern_preview#height_default_func() abort
   return height
 endfunction
 
-function! fern_preview#top_default_func() abort
-  let top = ((&lines - fern_preview#height_default_func()) / 2) - 1
-  return top
+function! fern_preview#left_default_func() abort
+  let left = (&columns - call(g:fern_preview_window_calculator.width, [])) / 2
+  return left
 endfunction
 
-function! fern_preview#left_default_func() abort
-  let left = (&columns - fern_preview#width_default_func()) / 2
-  return left
+function! fern_preview#top_default_func() abort
+  let top = ((&lines - call(g:fern_preview_window_calculator.height, [])) / 2) - 1
+  return top
 endfunction
 
 function! s:open_preview(path) abort
@@ -152,8 +152,8 @@ function! s:open_preview(path) abort
 
   let width  = call(g:fern_preview_window_calculator.width, [])
   let height = call(g:fern_preview_window_calculator.height, [])
-  let top    = call(g:fern_preview_window_calculator.top, [])
   let left   = call(g:fern_preview_window_calculator.left, [])
+  let top    = call(g:fern_preview_window_calculator.top, [])
 
   call s:win.open({
   \   'row': top,
