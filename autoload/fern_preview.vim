@@ -72,6 +72,30 @@ function! fern_preview#open() abort
     return
   endif
 
+  if s:is_blacklist_filetype(path)
+    call fern_preview#close()
+    echohl WarningMsg
+    echomsg 'Ignore filetype: ' . path
+    echohl None
+    return
+  endif
+
+  if s:is_binary(path)
+    call fern_preview#close()
+    echohl WarningMsg
+    echomsg 'Binary file: ' . path
+    echohl None
+    return
+  endif
+
+  if !s:is_valid_filesize(path)
+    call fern_preview#close()
+    echohl WarningMsg
+    echomsg 'Too large filesize: ' . path
+    echohl None
+    return
+  endif
+
   call s:open_preview(path)
 endfunction
 
@@ -162,4 +186,22 @@ function! s:define_autocmd() abort
       autocmd CursorMoved <buffer> ++nested        call s:cursor_moved()
     endif
   augroup END
+endfunction
+
+function! s:is_blacklist_filetype(path) abort
+  for ext in g:fern_preview_blacklist_extensions
+    if match(a:path, '.' . ext . '$') !=# -1
+      return v:true
+    endif
+  endfor
+
+  return v:false
+endfunction
+
+function! s:is_valid_filesize(path) abort
+  return getfsize(a:path) < g:fern_preview_max_filesize
+endfunction
+
+function! s:is_binary(path) abort
+  return get(readfile(a:path, 'b', 10), 0, '') =~# '[^[:print:]]'
 endfunction
