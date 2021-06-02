@@ -58,18 +58,6 @@ function! fern_preview#cursor_moved() abort
   endif
 endfunction
 
-function! fern_preview#define_autocmd() abort
-  augroup fern-preview-opened
-    autocmd! * <buffer>
-    autocmd BufLeave <buffer> call fern_preview#close()
-    if has('nvim')
-      autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
-    else
-      autocmd CursorMoved <buffer> ++nested        call fern_preview#cursor_moved()
-    endif
-  augroup END
-endfunction
-
 function! fern_preview#fern_open_or_change_dir() abort
   call fern_preview#close()
 
@@ -86,11 +74,10 @@ function! fern_preview#open() abort
 
   let path = helper.sync.get_cursor_node()['_path']
 
-  call fern_preview#define_autocmd()
-
   if !has('nvim')
     let s:line = line('.')
   endif
+  call s:define_autocmd()
 
   if isdirectory(path)
     call fern_preview#close()
@@ -114,10 +101,6 @@ function! fern_preview#half_up() abort
   let winid = s:win.get_winid()
   let info = s:Window.info(winid)
   call s:Window.scroll(winid, info.topline - info.height / 2)
-endfunction
-
-function! fern_preview#is_visible() abort
-  return s:win.is_visible()
 endfunction
 
 function! fern_preview#width_default_func() abort
@@ -163,4 +146,16 @@ function! s:open_preview(path) abort
   \   'topline': 1,
   \   'border': v:true,
   \ })
+endfunction
+
+function! s:define_autocmd() abort
+  augroup fern-preview-control-window
+    autocmd! * <buffer>
+    autocmd BufLeave <buffer> call fern_preview#close()
+    if has('nvim')
+      autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+    else
+      autocmd CursorMoved <buffer> ++nested        call fern_preview#cursor_moved()
+    endif
+  augroup END
 endfunction
