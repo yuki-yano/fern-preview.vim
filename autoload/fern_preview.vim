@@ -51,6 +51,10 @@ function! fern_preview#cursor_moved() abort
     return
   endif
 
+  if !has('nvim') && !g:fern_auto_preview
+    autocmd! fern-preview-control-window * <buffer>
+  endif
+
   if g:fern_auto_preview
     call fern_preview#open()
   else
