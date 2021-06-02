@@ -47,7 +47,7 @@ function! fern_preview#toggle() abort
 endfunction
 
 function! fern_preview#cursor_moved() abort
-  if !has('nvim') && s:line ==# line('.')
+  if !has('nvim') && !g:fern_auto_preview && s:line ==# line('.')
     return
   endif
 
