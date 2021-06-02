@@ -29,7 +29,7 @@ endif
 
 augroup fern-preview-internal
   autocmd!
-  autocmd FileType fern call fern_preview#fern_open_or_change_dir()
+  autocmd FileType,BufEnter fern call fern_preview#fern_open_or_change_dir()
 augroup END
 
 call add(g:fern#scheme#file#mapping#mappings, 'preview')

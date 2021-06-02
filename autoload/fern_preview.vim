@@ -61,7 +61,7 @@ endfunction
 function! fern_preview#define_autocmd() abort
   augroup fern-preview-opened
     autocmd! * <buffer>
-    autocmd BufLeave <buffer> ++once call fern_preview#close()
+    autocmd BufLeave <buffer> call fern_preview#close()
     if has('nvim')
       autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
     else
@@ -75,7 +75,6 @@ function! fern_preview#fern_open_or_change_dir() abort
 
   if g:fern_auto_preview
     call fern_preview#open()
-    call fern_preview#define_autocmd()
   endif
 endfunction
 
