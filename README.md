@@ -1,6 +1,6 @@
 # fern-preview.vim
 
-Add a file preview function to [fern.vim](https://github.com/lambdalisue/fern.vim).
+Add a file preview window to [fern.vim](https://github.com/lambdalisue/fern.vim).
 
 ## Features
 
