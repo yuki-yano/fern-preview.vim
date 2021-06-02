@@ -46,22 +46,6 @@ function! fern_preview#toggle() abort
   endif
 endfunction
 
-function! fern_preview#cursor_moved() abort
-  if !has('nvim') && !g:fern_auto_preview && s:line ==# line('.')
-    return
-  endif
-
-  if !has('nvim') && !g:fern_auto_preview
-    autocmd! fern-preview-control-window * <buffer>
-  endif
-
-  if g:fern_auto_preview
-    call fern_preview#open()
-  else
-    call fern_preview#close()
-  endif
-endfunction
-
 function! fern_preview#fern_open_or_change_dir() abort
   call fern_preview#close()
 
@@ -152,14 +136,30 @@ function! s:open_preview(path) abort
   \ })
 endfunction
 
+function! s:cursor_moved() abort
+  if !has('nvim') && !g:fern_auto_preview && s:line ==# line('.')
+    return
+  endif
+
+  if !has('nvim') && !g:fern_auto_preview
+    autocmd! fern-preview-control-window * <buffer>
+  endif
+
+  if g:fern_auto_preview
+    call fern_preview#open()
+  else
+    call fern_preview#close()
+  endif
+endfunction
+
 function! s:define_autocmd() abort
   augroup fern-preview-control-window
     autocmd! * <buffer>
     autocmd BufLeave <buffer> call fern_preview#close()
     if has('nvim')
-      autocmd CursorMoved <buffer> ++nested ++once call fern_preview#cursor_moved()
+      autocmd CursorMoved <buffer> ++nested ++once call s:cursor_moved()
     else
-      autocmd CursorMoved <buffer> ++nested        call fern_preview#cursor_moved()
+      autocmd CursorMoved <buffer> ++nested        call s:cursor_moved()
     endif
   augroup END
 endfunction
