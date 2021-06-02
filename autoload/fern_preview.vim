@@ -203,9 +203,12 @@ function! s:is_valid_filesize(path) abort
 endfunction
 
 function! s:is_binary(path) abort
-  try
-    return get(readfile(a:path, 'b', 10), 0, '') =~# '[^[:print:]]'
-  catch 
-    return v:true
-  endtry
+  return v:false
+
+  " FIX: False positive
+  " try
+  "   return get(readfile(a:path, 'b', 10), 0, '') =~# '[^[:print:]]'
+  " catch 
+  "   return v:true
+  " endtry
 endfunction
