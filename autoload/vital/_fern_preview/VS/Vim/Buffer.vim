@@ -112,7 +112,7 @@ function! s:pseudo(filepath) abort
   endif
 
   " create pseudo buffer
-  let l:bufname = printf('VSVimBuffer://%s', a:filepath)
+  let l:bufname = printf('VSVimBufferPseudo://%s', a:filepath)
   if bufexists(l:bufname)
     return s:ensure(l:bufname)
   endif
@@ -120,7 +120,7 @@ function! s:pseudo(filepath) abort
   let l:bufnr = s:ensure(l:bufname)
   let l:group = printf('VS_Vim_Buffer_pseudo:%s', l:bufnr)
   execute printf('augroup %s', l:group)
-    execute printf('autocmd BufReadCmd <buffer=%s> call setline(1, readfile(bufname("%")[14 : -1])) | try | filetype detect | catch /.*/ | endtry | augroup %s | autocmd! | augroup END', l:bufnr, l:group)
+    execute printf('autocmd BufReadCmd <buffer=%s> call setline(1, readfile(bufname("%")[20 : -1])) | try | filetype detect | catch /.*/ | endtry | augroup %s | autocmd! | augroup END', l:bufnr, l:group)
   augroup END
   return l:bufnr
 endfunction
