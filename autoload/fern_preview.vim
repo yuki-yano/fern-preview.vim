@@ -195,7 +195,7 @@ endfunction
 
 function! s:is_ignore_filetype(path) abort
   for ext in g:fern_preview_ignore_extensions
-    if match(a:path, '.' . ext . '$') !=# -1
+    if match(a:path, '\.' . ext . '$') !=# -1
       return v:true
     endif
   endfor
