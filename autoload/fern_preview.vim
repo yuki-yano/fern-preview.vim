@@ -161,6 +161,11 @@ function! s:open_preview(path) abort
 endfunction
 
 function! s:cursor_moved() abort
+  if &filetype !=# 'fern'
+    autocmd! fern-preview-control-window * <buffer>
+    return
+  endif
+
   if !has('nvim') && !g:fern_auto_preview && s:line ==# line('.')
     return
   endif
@@ -181,9 +186,9 @@ function! s:define_autocmd() abort
     autocmd! * <buffer>
     autocmd BufLeave <buffer> call fern_preview#close()
     if has('nvim')
-      autocmd CursorMoved <buffer> ++nested ++once call s:cursor_moved()
+      autocmd CursorMoved <buffer> ++nested ++once call timer_start(0, { -> s:cursor_moved() })
     else
-      autocmd CursorMoved <buffer> ++nested        call s:cursor_moved()
+      autocmd CursorMoved <buffer> ++nested        call timer_start(0, { -> s:cursor_moved() })
     endif
   augroup END
 endfunction
