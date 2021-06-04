@@ -38,15 +38,24 @@ call dein#add('yuki-yano/fern-preview.vim')
 ### Mapping
 
 ```vim
-nmap <silent> <buffer> p     <Plug>(fern-action-preview:toggle)
-nmap <silent> <buffer> <C-p> <Plug>(fern-action-preview:auto:toggle)
-nmap <silent> <buffer> <C-d> <Plug>(fern-action-preview:scroll:down:half)
-nmap <silent> <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
+function! s:fern_settings() abort
+  nmap <silent> <buffer> p     <Plug>(fern-action-preview:toggle)
+  nmap <silent> <buffer> <C-p> <Plug>(fern-action-preview:auto:toggle)
+  nmap <silent> <buffer> <C-d> <Plug>(fern-action-preview:scroll:down:half)
+  nmap <silent> <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
+endfunction
+
+augroup fern-settings
+  autocmd!
+  autocmd FileType fern call s:fern_settings()
+augroup END
 ```
 
 ### Use smart_preview function example
 
 ```vim
-nmap <silent> <buffer> <expr> <Plug>(fern-quit-or-close-preview) fern_preview#smart_preview("\<Plug>(fern-action-preview:close)", ":q\<CR>")
-nmap <silent> <buffer> q <Plug>(fern-quit-or-close-preview)
+function! s:fern_settings() abort
+  nmap <silent> <buffer> <expr> <Plug>(fern-quit-or-close-preview) fern_preview#smart_preview("\<Plug>(fern-action-preview:close)", ":q\<CR>")
+  nmap <silent> <buffer> q <Plug>(fern-quit-or-close-preview)
+endfunction
 ```
