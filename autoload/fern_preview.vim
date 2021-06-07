@@ -208,12 +208,11 @@ function! s:is_valid_filesize(path) abort
 endfunction
 
 function! s:is_binary(path) abort
-  return v:false
+  for b in readfile(a:path, 'b', 3)
+    if stridx(b, "\<NL>") != -1
+      return v:true
+    endif
+  endfor
 
-  " FIX: False positive
-  " try
-  "   return get(readfile(a:path, 'b', 10), 0, '') =~# '[^[:print:]]'
-  " catch 
-  "   return v:true
-  " endtry
+  return v:false
 endfunction
