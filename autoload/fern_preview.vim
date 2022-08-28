@@ -7,9 +7,9 @@ let s:win = s:FloatingWindow.new()
 call s:win.set_var('&number', 1)
 
 if has('nvim')
-  call s:win.set_var('&winhighlight', 'NormalFloat:Normal')
+  call s:win.set_var('&winhighlight', g:fern_preview_window_highlight)
 else
-  call s:win.set_var('&wincolor', 'Normal')
+  call s:win.set_var('&wincolor', g:fern_preview_window_highlight)
 endif
 
 function! fern_preview#smart_preview(preview, non_preview) abort

@@ -27,6 +27,14 @@ if !exists('g:fern_preview_window_calculator.left')
   let g:fern_preview_window_calculator.left = function('fern_preview#left_default_func')
 endif
 
+if !exists('g:fern_preview_window_highlight')
+  if has('nvim')
+    let g:fern_preview_window_highlight = 'NormalFloat:Normal'
+  else
+    let g:fern_preview_window_highlight = 'Normal'
+  endif
+endif
+
 if !exists('g:fern_preview_max_filesize')
   let g:fern_preview_max_filesize = 300 * 1000
 endif
